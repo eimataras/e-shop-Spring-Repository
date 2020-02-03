@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.4.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
 }
 
 group = 'lt.eimantas'
@@ -9,37 +9,42 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.liquibase:liquibase-core'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
-	implementation 'org.springdoc:springdoc-openapi-ui:1.2.26'
-	implementation 'org.springdoc:springdoc-openapi-webmvc-core:1.2.26'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-	testImplementation 'io.projectreactor:reactor-test'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'   //MyBatis
+
+    implementation 'org.springdoc:springdoc-openapi-ui:1.2.26'           //Swagger enabled here
+    implementation 'org.springdoc:springdoc-openapi-webmvc-core:1.2.26'  //Swagger enabled here
+
+    compileOnly 'org.projectlombok:lombok'   // @Data Creates getters and setters when compiling
+    annotationProcessor 'org.projectlombok:lombok'  // @Data Creates getters and setters when compiling
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'io.projectreactor:reactor-test'
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
