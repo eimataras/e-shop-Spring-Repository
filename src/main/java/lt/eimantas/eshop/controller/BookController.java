@@ -13,10 +13,14 @@ import java.util.List;
 @RequestMapping("/book")
 public class BookController {
 
-    @Autowired
-    BookMapper bookMapper;
+  //  @Autowired
+    private BookMapper bookMapper;
 
-    @GetMapping("all")
+    public BookController(BookMapper bookMapper) {
+        this.bookMapper = bookMapper;
+    }
+
+    @GetMapping("/all")
     public List<Book> getAll() {
         return bookMapper.findAll();
     }
