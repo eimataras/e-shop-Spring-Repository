@@ -16,7 +16,7 @@ public interface OrderStatusMapper {
     Optional<OrderStatus> findById(Integer status_id);
 
     @Insert("INSERT INTO `OrderStatus` (`type`) VALUES (#{type})")
-    @SelectKey(statement = "SELECT SCOPE_IDENTITY()", keyProperty = "id", before = false, resultType = Integer.class)
+//    @SelectKey(statement = "SELECT SCOPE_IDENTITY()", keyProperty = "id", before = false, resultType = Integer.class)
     void add(OrderStatus status);
 
     @Update("UPDATE `OrderStatus` SET `type`=#{type} WHERE `status_id`=#{status_id}")

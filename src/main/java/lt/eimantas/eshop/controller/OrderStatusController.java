@@ -1,9 +1,7 @@
 package lt.eimantas.eshop.controller;
 
 import lt.eimantas.eshop.mapper.OrderStatusMapper;
-import lt.eimantas.eshop.mapper.UserMapper;
 import lt.eimantas.eshop.model.OrderStatus;
-import lt.eimantas.eshop.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

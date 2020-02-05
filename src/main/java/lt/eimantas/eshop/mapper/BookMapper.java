@@ -16,7 +16,7 @@ public interface BookMapper {
     Optional<Book> findById(Integer book_id);
 
     @Insert("INSERT INTO `Book` (`title`, `author`, `published_date`, `book_cover`, `quantity`) VALUES (#{title}, #{author}, #{published_date}, #{book_cover}, #{quantity})")
-    @SelectKey(statement = "SELECT SCOPE_IDENTITY()", keyProperty = "id", before = false, resultType = Integer.class)
+//    @SelectKey(statement = "SELECT SCOPE_IDENTITY()", keyProperty = "id", before = false, resultType = Integer.class)
     void add(Book book);
 
     @Update("UPDATE `Book` SET `title`=#{title}, `author`=#{author}, `published_date`=#{published_date}, `book_cover`=#{book_cover}, `quantity`=#{quantity} WHERE `book_id`=#{book_id}")
@@ -24,5 +24,4 @@ public interface BookMapper {
 
     @Delete("DELETE FROM `Book` WHERE `book_id` = #{book_id}")
     void deleteById(Integer book_id);
-
 }

@@ -1,8 +1,6 @@
 package lt.eimantas.eshop.controller;
 
-import lt.eimantas.eshop.mapper.BookMapper;
 import lt.eimantas.eshop.mapper.UserMapper;
-import lt.eimantas.eshop.model.Book;
 import lt.eimantas.eshop.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +36,12 @@ public class UserController {
     @PutMapping("/edit")
     public void updateUser(@RequestBody User user) {
         userMapper.update(user);
+    }
+
+    //Slaptazodzio keitimas ivedus username ir sena slaptazodi
+    @PutMapping("/changePassword")
+    public void changeUserPassword(@RequestParam String username, @RequestParam String oldPassword, @RequestParam String newPassword) {
+        userMapper.changePassword(username, oldPassword, newPassword);
     }
 
     @DeleteMapping("/delete")
