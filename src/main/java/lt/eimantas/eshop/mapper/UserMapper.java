@@ -15,11 +15,11 @@ public interface UserMapper {
     @Select("SELECT * FROM `User` WHERE `user_id`=#{user_id}")
     Optional<User> findById(Integer user_id);
 
-    @Insert("INSERT INTO `User` (`name`, `surname`, `username`, `password`, `role`) VALUES (#{name}, #{surname}, #{username}, #{password}, #{role})")
+    @Insert("INSERT INTO `User` (`name`, `surname`, `username`, `password`) VALUES (#{name}, #{surname}, #{username}, #{password})")
 //    @SelectKey(statement = "SELECT SCOPE_IDENTITY()", keyProperty = "id", before = false, resultType = Integer.class)
     void add(User user);
 
-    @Update("UPDATE `User` SET `name`=#{name}, `surname`=#{surname}, `username`=#{username}, `password`=#{password}, `role`=#{role} WHERE `user_id`=#{user_id}")
+    @Update("UPDATE `User` SET `name`=#{name}, `surname`=#{surname}, `username`=#{username}, `password`=#{password} WHERE `user_id`=#{user_id}")
     void update(User user);
 
     //Slaptazodzio keitimas ivedus username ir sena slaptazodi

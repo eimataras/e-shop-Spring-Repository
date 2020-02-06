@@ -9,5 +9,5 @@ public class User {
     private String surname;
     private String username;   //(UK)
     private String password;
-    private String role;  // {Admin, Client;}
+//    private String role;  // {Admin, Client;}
 }
