@@ -12,8 +12,8 @@ public interface UserMapper {
     @Select("SELECT * FROM `User`")
     List<User> findAll();
 
-    @Select("SELECT * FROM `User` WHERE `user_id`=#{user_id}")
-    Optional<User> findById(Integer user_id);
+    @Select("SELECT * FROM `User` WHERE `username`=#{username}")
+    User findByUsername(String username);
 
     @Insert("INSERT INTO `User` (`name`, `surname`, `username`, `password`) VALUES (#{name}, #{surname}, #{username}, #{password})")
 //    @SelectKey(statement = "SELECT SCOPE_IDENTITY()", keyProperty = "id", before = false, resultType = Integer.class)
