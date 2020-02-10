@@ -21,10 +21,10 @@ public class UserController {
         return userMapper.findAll();
     }
 
-    @GetMapping("/:id")
+    @GetMapping("/:username")
     public @ResponseBody
-    Optional<User> getOneUserById(@RequestParam Integer user_id) {
-        Optional<User> result = userMapper.findById(user_id);
+    User getOneUserByUsername(@RequestParam String username) {
+        User result = userMapper.findByUsername(username);
         return result;
     }
 
