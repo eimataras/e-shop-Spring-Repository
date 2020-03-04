@@ -27,8 +27,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'   //making visible html templates
 
-    implementation 'org.springframework.boot:spring-boot-starter-security'//next task
-    implementation 'org.springframework.security:spring-security-test'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'//atjungiau ir uzkomentavau viska kas yra SECURITY folderyje, nes praleidzia tik GET dali
+//    implementation 'org.springframework.security:spring-security-test'    //atjungiau ir uzkomentavau viska kas yra SECURITY folderyje, nes praleidzia tik GET dali
 
   //  implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 

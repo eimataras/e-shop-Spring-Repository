@@ -2,6 +2,7 @@ package lt.eimantas.eshop.controller;
 
 import lt.eimantas.eshop.mapper.BookMapper;
 import lt.eimantas.eshop.model.Book;
+import lt.eimantas.eshop.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/book")
 public class BookController {
 
@@ -28,15 +30,20 @@ public class BookController {
         return result;
     }
 
+    @GetMapping("/max-id")
+    public @ResponseBody Optional <Book> getBookByMaxId(){
+        Optional <Book> result = bookMapper.findByMaxId();
+
+        return result;
+    }
+
     @PostMapping("/add")
-    public void addBook(@RequestBody Book book) {
-//        Book book = new Book();
-//        book.setTitle("Pasakos vaikams");
-//        book.setAuthor("Kazys Binkis");
-//        book.setPublished_date("2010-01-01");
-//        book.setBook_cover("https://...");
-//        book.setQuantity(5);
+    public @ResponseBody Optional <Book> addBook(@RequestBody Book book) {
         bookMapper.add(book);
+
+        Optional <Book> result = bookMapper.findByMaxId();
+
+        return result;
     }
 
     @PutMapping("/edit")
@@ -45,7 +52,9 @@ public class BookController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteBook(@RequestParam Integer book_id) {
+    public @ResponseBody Optional<Book> deleteBook(@RequestParam Integer book_id) {
+        Optional<Book> result = bookMapper.findById(book_id);
         bookMapper.deleteById(book_id);
+        return result;
     }
 }
