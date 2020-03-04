@@ -1,6 +1,7 @@
 package lt.eimantas.eshop.controller;
 
 import lt.eimantas.eshop.mapper.UserRoleMapper;
+import lt.eimantas.eshop.model.User;
 import lt.eimantas.eshop.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/userRole")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping(value = "/user-role")
 public class UserRoleController {
 
     @Autowired
@@ -28,9 +30,20 @@ public class UserRoleController {
         return result;
     }
 
+    @GetMapping("/max-id")
+    public @ResponseBody Optional <UserRole> getUserRoleByMaxId(){
+        Optional <UserRole> result = userRoleMapper.findByMaxId();
+
+        return result;
+    }
+
     @PostMapping("/add")
-    public void addUserRole(@RequestBody UserRole userRole) {
+    public Optional <UserRole> addUserRole(@RequestBody UserRole userRole) {
         userRoleMapper.add(userRole);
+
+        Optional <UserRole> result = userRoleMapper.findByMaxId();
+
+        return result;
     }
 
     @PutMapping("/edit")

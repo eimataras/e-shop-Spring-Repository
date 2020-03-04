@@ -2,7 +2,11 @@ package lt.eimantas.eshop.model;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+//import org.springframework.security.crypto.password.PasswordEncoder; //security uzkomentuotas
 
 @Data   //Creates constructor, getters and setter when compiling
 public class User {
@@ -11,11 +15,11 @@ public class User {
     private String surname;
     private String username;   //(UK)
     private String password;
+    private List<UserRole> roles;
 
-//    @Autowired
+    //    @Autowired
 //    PasswordEncoder encoder;
 //
 //    private String pass = encoder.encode(password);
 
-//    private String role;  // {Admin, Client;}
 }
