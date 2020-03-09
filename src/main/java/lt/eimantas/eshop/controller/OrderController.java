@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/order")
 public class OrderController {
 
@@ -34,9 +35,17 @@ public class OrderController {
         return orderMapper.findByUsername(username);
     }
 
+    @GetMapping("/:max-id")
+    public @ResponseBody
+    Optional<OrderAndUserAndStatus> getOrderByMaxId() {
+        return orderMapper.findByMaxId();
+    }
+
     @PostMapping("/add")
-    public void addOrder(@RequestBody Order order) {
+    public @ResponseBody Optional<OrderAndUserAndStatus> addOrder(@RequestBody Order order) {
         orderMapper.add(order);
+
+        return orderMapper.findByMaxId();
     }
 
     @PutMapping("/edit")

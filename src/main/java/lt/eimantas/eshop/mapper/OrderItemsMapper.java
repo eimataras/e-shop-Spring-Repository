@@ -16,12 +16,11 @@ public interface OrderItemsMapper {
     @Select("SELECT * FROM `OrderItems` WHERE `order_item_id`=#{order_item_id}")
     Optional<OrderItems> findById(Integer order_item_id);
 
-    //suranda visus OrderItems su Book informacija pagal order_id
+    //---------used in Order Mapper-----------------------------------------------------------------------------------
     @Select("SELECT * FROM `OrderItems` LEFT JOIN `Book` ON `OrderItems`.`book_id` = `Book`.`book_id` WHERE `order_id`=#{order_id}")
     List<OrderItemsAndBook> findByOrderId(Integer order_id);
 
     @Insert("INSERT INTO `OrderItems` (`order_id`, `book_id`, `quantity`) VALUES (#{order_id}, #{book_id}, #{quantity})")
-//    @SelectKey(statement = "SELECT SCOPE_IDENTITY()", keyProperty = "id", before = false, resultType = Integer.class)
     void add(OrderItems orderItems);
 
     @Update("UPDATE `OrderItems` SET `order_id`=#{order_id}, `book_id`=#{book_id}, `quantity`=#{quantity} WHERE `order_item_id`=#{order_item_id}")
