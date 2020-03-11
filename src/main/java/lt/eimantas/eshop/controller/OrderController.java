@@ -49,12 +49,18 @@ public class OrderController {
     }
 
     @PutMapping("/edit")
-    public void updateOrder(@RequestBody Order order) {
+    public @ResponseBody Optional<OrderAndUserAndStatus> updateOrder(@RequestBody Order order) {
         orderMapper.update(order);
+        Integer id = order.getOrder_id();
+
+        return orderMapper.findById(id);
     }
 
     @DeleteMapping("/delete")
-    public void deleteOrder(@RequestParam Integer order_id) {
+    public @ResponseBody Optional<OrderAndUserAndStatus> deleteOrder(@RequestParam Integer order_id) {
+        Optional<OrderAndUserAndStatus> result = orderMapper.findById(order_id);
         orderMapper.deleteById(order_id);
+
+        return result;
     }
 }
