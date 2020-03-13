@@ -26,24 +26,18 @@ public class BookController {
     @GetMapping("/:id")
     public @ResponseBody
     Optional<Book> getOneBookById(@RequestParam Integer book_id) {
-        Optional<Book> result = bookMapper.findById(book_id);
-        return result;
+        return bookMapper.findById(book_id);
     }
 
     @GetMapping("/max-id")
     public @ResponseBody Optional <Book> getBookByMaxId(){
-        Optional <Book> result = bookMapper.findByMaxId();
-
-        return result;
+        return bookMapper.findByMaxId();
     }
 
     @PostMapping("/add")
     public @ResponseBody Optional <Book> addBook(@RequestBody Book book) {
         bookMapper.add(book);
-
-        Optional <Book> result = bookMapper.findByMaxId();
-
-        return result;
+        return bookMapper.findByMaxId();
     }
 
     @PutMapping("/edit")

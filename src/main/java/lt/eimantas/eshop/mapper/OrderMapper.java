@@ -36,6 +36,12 @@ public interface OrderMapper {
     })
     Optional<OrderAndUserAndStatus> findByMaxId();
 
+    @Select("SELECT order_id FROM `Order` ORDER BY order_id DESC LIMIT 1 ")
+    Integer findMaxId();
+
+    @Select("SELECT order_id FROM `Order` WHERE `user_id`=#{user_id} AND `status_id`=#{status_id}")
+    Integer findOptionalId(Integer user_id, Integer status_id);
+
 
     @Select("SELECT * FROM `Order` LEFT JOIN `User` ON `Order`.`user_id` = `User`.`user_id` LEFT JOIN `OrderStatus` ON `Order`.`status_id` = `OrderStatus`.`status_id` LEFT JOIN `OrderItems` ON `Order`.`order_id` = `OrderItems`.`order_id` LEFT JOIN `Book` ON `OrderItems`.`book_id` = `Book`.`book_id` WHERE `username`=#{username}")
     List<OrderAndUserAndStatusAndItemsAndBook> findByUsername(String username);
