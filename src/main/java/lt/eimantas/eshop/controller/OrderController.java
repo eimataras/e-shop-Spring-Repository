@@ -58,28 +58,11 @@ public class OrderController {
             orderMapper.add(order);
             order.setOrder_id(orderMapper.findMaxId());
 
-//          Ir auomatiskai sukuriam irasa OrderItems lenteleje katik sukurtam naujam orderiui
+//          Ir automatiskai sukuriam irasa OrderItems lenteleje katik sukurtam naujam orderiui
             OrderItems orderItems = new OrderItems(order.getOrder_id(), order.getBook_id(), 1);
             orderItemsMapper.add(orderItems);
-        } else {
-
-//          Jei egzistuoja, tuomet paprasom knygu, jau pridetu i egzistuojanti orderi, kiekio ir
-//          patikrinam ar si knyga apsikritai jau buvo prideta
-            Integer optionalOrderItemQuantity = orderItemsMapper.findOptionalQuantity(orderAlreadyExistId, order.getBook_id());
-            if (optionalOrderItemQuantity == null) {
-
-//            Jei dar nebuvo, tuomet kuriam nauja OrderItems irasa ivesdami 1 knyga
-                OrderItems orderItems = new OrderItems(orderAlreadyExistId, order.getBook_id(), 1);
-                orderItemsMapper.add(orderItems);
-            } else {
-
-//            Jei jau buvo, tuomet editinam OrderItems irasa pakeisdami tik quantity + 1
-                Integer orderItemAlreadyExistId = orderItemsMapper.findOptionalId(orderAlreadyExistId, order.getBook_id(), optionalOrderItemQuantity);
-                Integer quantity = optionalOrderItemQuantity + 1;
-                OrderItems orderItems = new OrderItems(orderItemAlreadyExistId, orderAlreadyExistId, order.getBook_id(), quantity);
-                orderItemsMapper.update(orderItems);
-            }
         }
+
         return orderMapper.findByMaxId();
     }
 

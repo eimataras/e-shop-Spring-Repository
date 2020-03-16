@@ -20,11 +20,11 @@ public interface OrderItemsMapper {
     @Select("SELECT * FROM `OrderItems` LEFT JOIN `Book` ON `OrderItems`.`book_id` = `Book`.`book_id` WHERE `order_id`=#{order_id}")
     List<OrderItemsAndBook> findByOrderId(Integer order_id);
 
-    @Select("SELECT order_item_id FROM `OrderItems` WHERE `order_id`=#{order_id} AND `book_id`=#{book_id} AND `quantity`=#{optionalOrderItemQuantity}")
-    Integer findOptionalId(Integer order_id, Integer book_id, Integer optionalOrderItemQuantity);
+    @Select("SELECT order_item_id FROM `OrderItems` WHERE `order_id`=#{order_id} AND `book_id`=#{book_id}")
+    Integer findOptionalId(Integer order_id, Integer book_id);
 
-    @Select("SELECT quantity FROM `OrderItems` WHERE `order_id`=#{order_id} AND `book_id`=#{book_id}")
-    Integer findOptionalQuantity (Integer order_id, Integer book_id);
+    @Select("SELECT quantity FROM `OrderItems` WHERE `order_item_id`=#{order_item_id}")
+    Integer findOptionalQuantity (Integer order_item_id);
 
     @Insert("INSERT INTO `OrderItems` (`order_id`, `book_id`, `quantity`) VALUES (#{order_id}, #{book_id}, #{quantity})")
     void add(OrderItems orderItems);
