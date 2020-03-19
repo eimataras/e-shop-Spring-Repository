@@ -59,8 +59,21 @@ public class OrderItemsController {
     }
 
     @PutMapping("/edit")
-    public void updateOrderItem(@RequestBody OrderItems orderItems) {
-        orderItemsMapper.update(orderItems);
+    public Optional<OrderAndUserAndStatus> updateOrderItem(@RequestBody OrderItems orderItems) {
+
+//      Jei is fronto ateina quantity = 0, tuomet istrinam OrderItems irasa
+        if (orderItems.getQuantity() == 0) {
+            orderItemsMapper.deleteById(orderItems.getOrder_item_id());
+
+//          Jei siam orderiui tai buvo paskutinis OrderItems irasas, tuomet istrinam ir pati orderi
+//            if (orderItemsMapper.findSingleIdByOrderId(orderItems.getOrder_id()) == null) {
+//                orderMapper.deleteById(orderItems.getOrder_id());
+//            }
+        } else {
+            orderItemsMapper.update(orderItems);
+        }
+
+        return orderMapper.findById(orderItems.getOrder_id());
     }
 
     @DeleteMapping("/delete")
