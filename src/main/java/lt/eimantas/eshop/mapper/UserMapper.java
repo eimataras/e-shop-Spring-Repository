@@ -28,6 +28,15 @@ public interface UserMapper {
     Optional<User> findById(Integer user_id);
 
 
+    @Select("SELECT * FROM `User` WHERE `username`=#{username}")
+    @Results({
+            @Result(id = true, property = "user_id", column = "user_id"),
+            @Result(property = "roles", column = "user_id",
+                    many = @Many(select = "lt.eimantas.eshop.mapper.UserRoleMapper.findByUserId"))
+    })
+    Optional<User> findByUsername(String username);
+
+
     @Insert("INSERT INTO `User` (`name`, `surname`, `username`, `password`) VALUES (#{name}, #{surname}, #{username}, #{password})")
 //    @SelectKey(statement = "SELECT SCOPE_IDENTITY()", keyProperty = "id", before = false, resultType = Integer.class)
     void add(User user);

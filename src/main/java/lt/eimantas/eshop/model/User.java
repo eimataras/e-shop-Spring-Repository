@@ -17,6 +17,19 @@ public class User {
     private String password;
     private List<UserRole> roles;
 
+
+    public User () {
+    }
+
+    public User (User user) {
+        this.roles = user.getRoles();
+        this.password = user.getPassword();
+        this.username = user.getUsername();
+        this.surname = user.getSurname();
+        this.name = user.getName();
+        this.user_id = user.getUser_id();
+    }
+
     //    @Autowired
 //    PasswordEncoder encoder;
 //
