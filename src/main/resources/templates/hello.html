@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
->
-<head>
-    <title>Hello World!</title>
-    <style>
-        body {background-color: yellow;
-        }
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"-->
+<!--&gt;-->
+<!--<head>-->
+<!--    <title>Hello World!</title>-->
+<!--    <style>-->
+<!--        body {background-color: yellow;-->
+<!--        }-->
 
-    </style>
-</head>
-<body>
-<h1 th:inline="text">Sveiki [[${#httpServletRequest.remoteUser}]], esate prisijungęs!</h1>
-<p>Grįžti į <a href="/home">pradinį</a> puslapį.</p>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-</body>
-</html>
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1 th:inline="text">Sveiki [[${#httpServletRequest.remoteUser}]], esate prisijungęs!</h1>-->
+<!--<p>Grįžti į <a href="/home">pradinį</a> puslapį.</p>-->
+<!--<form th:action="@{/logout}" method="post">-->
+<!--    <input type="submit" value="Sign Out"/>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->

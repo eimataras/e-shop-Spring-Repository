@@ -35,7 +35,7 @@ public class BookController {
         return bookMapper.findByMaxId();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/add")
     public @ResponseBody Optional <Book> addBook(@RequestBody Book book) {
         bookMapper.add(book);
@@ -47,7 +47,7 @@ public class BookController {
         bookMapper.update(book);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/delete")
     public @ResponseBody Optional<Book> deleteBook(@RequestParam Integer book_id) {
         Optional<Book> result = bookMapper.findById(book_id);

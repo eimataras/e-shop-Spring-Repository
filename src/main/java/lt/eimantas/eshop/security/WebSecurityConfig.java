@@ -9,11 +9,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 
+@CrossOrigin(origins = "http://localhost:3000")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 @EnableWebSecurity
@@ -23,63 +24,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private MyUserDetailsService myUserDetailsService;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(myUserDetailsService)
-        .passwordEncoder(getPasswordEncoder());
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+//        http.cors().disable();
+        http.authorizeRequests()
+                .antMatchers("/order/all", "/book/all", "/user/add-client").permitAll()
+                .antMatchers("/user/all", "/user/add-admin", "/book/delete", "/book/add").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+//                .httpBasic()
+                .formLogin().permitAll()
+                .loginProcessingUrl("/login").defaultSuccessUrl("http://localhost:3000/#/myHomePage/25")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .and()
+                .logout().logoutSuccessUrl("http://localhost:3000/#/signin");
+//                .and()
+//                .rememberMe().tokenValiditySeconds(300);
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.authorizeRequests()
-                .antMatchers("/book/all", "/order/all").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll();
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
     }
 
-
-    private PasswordEncoder getPasswordEncoder() {
-        return new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence rawPassword) {
-                return rawPassword.toString();
-            }
-
-            @Override
-            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                return encode(rawPassword).equals(encodedPassword);
-            }
-        };
+    @Bean
+    DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(getPasswordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(myUserDetailsService);
+        return daoAuthenticationProvider;
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "/home", "/book/all").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//    }
-//
-//    //ziureti MyUserPrincipal getPassword metoda
-//    @Bean
-//    public static PasswordEncoder encoder() {
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//    }
-//
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        final DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(myUserDetailsService);
-//        authProvider.setPasswordEncoder(encoder());
-//        return authProvider;
-//    }
-
+    @Bean
+    PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

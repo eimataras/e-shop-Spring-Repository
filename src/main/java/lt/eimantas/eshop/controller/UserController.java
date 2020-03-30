@@ -1,12 +1,11 @@
 package lt.eimantas.eshop.controller;
 
-import io.swagger.v3.oas.annotations.headers.Header;
 import lt.eimantas.eshop.mapper.UserMapper;
 import lt.eimantas.eshop.mapper.UserRoleMapper;
 import lt.eimantas.eshop.model.User;
 import lt.eimantas.eshop.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +22,11 @@ public class UserController {
     @Autowired
     private UserRoleMapper userRoleMapper;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/all")
     public List<User> getAllUsers() {
         return userMapper.findAll();
@@ -41,11 +43,12 @@ public class UserController {
     }
 
     @GetMapping("/username")
-    public @ResponseBody Optional <User> getUserByUsername(@RequestParam String username) {return userMapper.findByUsername(username);}
+    public @ResponseBody User getUserByUsername(@RequestParam String username) {return userMapper.findByUsername(username);}
 
     @PostMapping("/add-client")
     public @ResponseBody Optional <User> addUserClient(@RequestBody User user) {
-        userMapper.add(user);
+        User encodedUser = new User(user.getName(), user.getSurname(), user.getUsername(), passwordEncoder.encode(user.getPassword()));
+        userMapper.add(encodedUser);
 
         //---------SUKURIA IRASA (NEW CLIENT) UserRole LENTELEJE-------------
         Integer user_id = userMapper.findMaxId();
@@ -59,9 +62,11 @@ public class UserController {
     }
 
 
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/add-admin")
     public @ResponseBody Optional <User> addUserAdmin(@RequestBody User user) {
-        userMapper.add(user);
+        User encodedUser = new User(user.getName(), user.getSurname(), user.getUsername(), passwordEncoder.encode(user.getPassword()));
+        userMapper.add(encodedUser);
 
         //---------SUKURIA IRASA (NEW ADMIN) UserRole LENTELEJE-------------
         Integer user_id = userMapper.findMaxId();

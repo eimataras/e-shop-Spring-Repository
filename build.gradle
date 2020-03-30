@@ -20,17 +20,21 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'   //making visible html templates
+//    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'   //making visible html templates
+//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
 
     implementation 'org.springframework.boot:spring-boot-starter-security'//atjungiau ir uzkomentavau viska kas yra SECURITY folderyje, nes praleidzia tik GET dali
     implementation 'org.springframework.security:spring-security-test'    //atjungiau ir uzkomentavau viska kas yra SECURITY folderyje, nes praleidzia tik GET dali
+    compile("com.auth0:java-jwt:3.4.1")
 
-   // implementation 'org.liquibase:liquibase-core'
+
+    // implementation 'org.liquibase:liquibase-core'
 
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'   //MyBatis
 
