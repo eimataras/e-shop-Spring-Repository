@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 //                .httpBasic()
                 .formLogin().permitAll()
-                .loginProcessingUrl("/login").defaultSuccessUrl("http://localhost:3000/#/myHomePage/25")
+                .loginProcessingUrl("/login").defaultSuccessUrl("http://localhost:3000/#/myHomePage/25").failureUrl("http://localhost:3000/#/signin/failed")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
