@@ -32,6 +32,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'//atjungiau ir uzkomentavau viska kas yra SECURITY folderyje, nes praleidzia tik GET dali
     implementation 'org.springframework.security:spring-security-test'    //atjungiau ir uzkomentavau viska kas yra SECURITY folderyje, nes praleidzia tik GET dali
     compile("com.auth0:java-jwt:3.4.1")
+    implementation('io.jsonwebtoken:jjwt:0.2')
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+
+
 
 
     // implementation 'org.liquibase:liquibase-core'
