@@ -1,10 +1,14 @@
 package lt.eimantas.eshop.controller;
 
+import lt.eimantas.eshop.mapper.UserMapper;
 import lt.eimantas.eshop.model.AuthenticationRequest;
 import lt.eimantas.eshop.model.AuthenticationResponse;
+import lt.eimantas.eshop.model.User;
 import lt.eimantas.eshop.security.JwtTokenUtil;
 import lt.eimantas.eshop.security.MyUserDetailsService;
+import lt.eimantas.eshop.security.MyUserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +29,9 @@ public class AuthController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private UserMapper userMapper;
+
 
     @RequestMapping(value = "/api/auth", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
@@ -42,7 +49,9 @@ public class AuthController {
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
 
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
+        final User user = new User(userMapper.findByUsername(authenticationRequest.getUsername()));
+
+        final String jwt = jwtTokenUtil.generateToken(userDetails, user);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
