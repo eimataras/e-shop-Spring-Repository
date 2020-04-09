@@ -34,18 +34,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 //        http.cors().disable();
         http.authorizeRequests()
-                .antMatchers( "/book/all", "/user/add-client", "/api/auth").permitAll()
+                .antMatchers("/book/all", "/user/add-client", "/api/auth").permitAll()
                 .antMatchers("/user/all", "/user/add-admin", "/book/delete", "/book/add").hasRole("ADMIN")
                 .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().formLogin().permitAll()
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("http://localhost:3000/#/myHomePage/25")
-                .failureUrl("http://localhost:3000/#/signin/failed")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .and().logout().logoutSuccessUrl("http://localhost:3000/#/signin");
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//        The rest of the settings only work with formLogin authentication that is StateFull
+//                .invalidSessionUrl("http://localhost:3000/signin/failed")
+//                .and().formLogin().permitAll()
+//                .loginProcessingUrl("/login")
+//                .defaultSuccessUrl("http://localhost:3000")
+//                .failureUrl("http://localhost:3000/signin/failed")
+//                .usernameParameter("username")
+//                .passwordParameter("password")
+//                .and().logout().logoutSuccessUrl("http://localhost:3000/#/signin");
 //                .and()
 //                .rememberMe().tokenValiditySeconds(300);
     }
