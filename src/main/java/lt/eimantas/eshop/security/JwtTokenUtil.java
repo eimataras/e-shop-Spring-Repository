@@ -41,6 +41,8 @@ public class JwtTokenUtil {
         Map<String, Object> claims = new HashMap<>();
 //      Cia isidedu user info, kurios reikia fronte
         claims.put("roles", user.getRoles());
+        claims.put("SurnameFirstLetter", user.getSurname().substring(0, 1));
+        claims.put("NameFirstLetter", user.getName().substring(0, 1));
         return createToken(claims, userDetails.getUsername());
     }
 
