@@ -1,5 +1,7 @@
 package lt.eimantas.eshop.security;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,19 +30,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         final String authorizationHeader = request.getHeader("Authorization");
+        final String firebaseHeader = request.getHeader("Firebase");
         String username = null;
         String jwt = null;
+        String idToken = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             username = jwtTokenUtil.extractUsername(jwt);
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (firebaseHeader != null && firebaseHeader.startsWith("Bearer ")) {
+            idToken = firebaseHeader.substring(7);
+        }
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null && idToken != null) {
             UserDetailsService userDetailsService;
             UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
 
-            if (jwtTokenUtil.validateToken(jwt, userDetails)) {
+            if (jwtTokenUtil.validateToken(jwt, userDetails) && jwtTokenUtil.isIdTokenValid(idToken)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
