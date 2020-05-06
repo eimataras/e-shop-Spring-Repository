@@ -1,5 +1,6 @@
 package lt.eimantas.eshop.controller;
 
+import com.google.firebase.auth.FirebaseAuth;
 import lt.eimantas.eshop.mapper.UserMapper;
 import lt.eimantas.eshop.model.AuthenticationRequest;
 import lt.eimantas.eshop.model.AuthenticationResponse;
@@ -36,6 +37,7 @@ public class AuthController {
     @RequestMapping(value = "/api/auth", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
+//  ----------------Creating jwt
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
@@ -53,6 +55,12 @@ public class AuthController {
 
         final String jwt = jwtTokenUtil.generateToken(userDetails, user);
 
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+
+//  ----------------Creating fireBase customToken
+        final String uid = String.valueOf(user.getUser_id());
+        final String customToken = FirebaseAuth.getInstance().createCustomToken(uid);
+
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwt, customToken));
     }
 }
