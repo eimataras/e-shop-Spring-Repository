@@ -56,15 +56,11 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
-    public Boolean isIdTokenValid(String idToken) {
+    public Boolean isIdTokenValid(String idToken, UserDetails userDetails) {
         FirebaseToken decodedToken = null;
         try {
             decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
-            if (decodedToken != null) {
-                return true;
-            } else {
-                return false;
-            }
+            return (decodedToken.getUid().equals(userDetails.getUsername()));
         } catch (FirebaseAuthException e) {
             e.printStackTrace();
             return false;

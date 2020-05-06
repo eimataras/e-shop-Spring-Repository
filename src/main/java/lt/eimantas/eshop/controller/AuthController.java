@@ -57,7 +57,7 @@ public class AuthController {
 
 
 //  ----------------Creating fireBase customToken
-        final String uid = String.valueOf(user.getUser_id());
+        final String uid = user.getUsername();
         final String customToken = FirebaseAuth.getInstance().createCustomToken(uid);
 
 
