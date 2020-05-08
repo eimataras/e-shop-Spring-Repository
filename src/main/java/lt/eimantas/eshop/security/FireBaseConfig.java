@@ -5,9 +5,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class FireBaseConfig {
@@ -15,8 +16,8 @@ public class FireBaseConfig {
     @Bean
     FirebaseApp createFireBaseApp() throws IOException {
 
-        FileInputStream serviceAccount =
-                new FileInputStream("C:/Users/Eima/IdeaProjects/e-shop-Spring-Repository/src/main/resources/bookshop-86079-firebase-adminsdk-74u5r-134131e90c.json");
+        InputStream serviceAccount =
+                 new ClassPathResource("bookshop-86079-firebase-adminsdk-74u5r-134131e90c.json").getInputStream();
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
