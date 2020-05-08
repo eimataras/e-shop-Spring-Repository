@@ -47,7 +47,7 @@ public class UserController {
 
     @PostMapping("/add-client")
     public @ResponseBody Optional <User> addUserClient(@RequestBody User user) {
-        User encodedUser = new User(user.getName(), user.getSurname(), user.getUsername(), passwordEncoder.encode(user.getPassword()));
+        User encodedUser = new User(user.getName(), user.getSurname(), user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getUid());
         userMapper.add(encodedUser);
 
         //---------SUKURIA IRASA (NEW CLIENT) UserRole LENTELEJE-------------
@@ -65,7 +65,7 @@ public class UserController {
 //    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/add-admin")
     public @ResponseBody Optional <User> addUserAdmin(@RequestBody User user) {
-        User encodedUser = new User(user.getName(), user.getSurname(), user.getUsername(), passwordEncoder.encode(user.getPassword()));
+        User encodedUser = new User(user.getName(), user.getSurname(), user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getUid());
         userMapper.add(encodedUser);
 
         //---------SUKURIA IRASA (NEW ADMIN) UserRole LENTELEJE-------------

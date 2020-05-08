@@ -4,13 +4,14 @@ import lt.eimantas.eshop.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class MyUserPrincipal extends User implements UserDetails {
 
-    public MyUserPrincipal (User user) {
+    public MyUserPrincipal(User user) {
         super(user);
     }
 
@@ -19,7 +20,7 @@ public class MyUserPrincipal extends User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         super.getRoles().forEach(role -> {
-            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+role.getRole_name());
+            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getRole_name());
             authorities.add(authority);
         });
         return authorities;

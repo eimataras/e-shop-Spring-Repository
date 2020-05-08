@@ -6,7 +6,9 @@ import com.google.firebase.auth.FirebaseToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lt.eimantas.eshop.mapper.UserMapper;
 import lt.eimantas.eshop.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ import java.util.function.Function;
 
 @Service
 public class JwtTokenUtil {
+
+    @Autowired
+    UserMapper userMapper;
 
     private String SECRET_KEY = "secret";
 
@@ -60,10 +65,21 @@ public class JwtTokenUtil {
         FirebaseToken decodedToken = null;
         try {
             decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
-            return (decodedToken.getUid().equals(userDetails.getUsername()));
+            return (userMapper.findByUid(decodedToken.getUid()).equals(userMapper.findByUsername(userDetails.getUsername())));
         } catch (FirebaseAuthException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public String validateIdTokenAndGetUid(String idToken) {
+        FirebaseToken decodedToken = null;
+        try {
+            decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            return decodedToken.getUid();
+        } catch (FirebaseAuthException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

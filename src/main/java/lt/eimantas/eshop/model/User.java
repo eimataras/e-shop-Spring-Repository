@@ -11,16 +11,18 @@ public class User {
     private String surname;
     private String username;   //(UK)
     private String password;
+    private String uid;        //(UK)
     private List<UserRole> roles;
 
     public User() {
     }
 
-    public User(String name, String surname, String username, String password) {
+    public User(String name, String surname, String username, String password, String uid) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
+        this.uid = uid;
     }
 
     public User(User user) {
@@ -30,5 +32,6 @@ public class User {
         this.surname = user.getSurname();
         this.name = user.getName();
         this.user_id = user.getUser_id();
+        this.uid = user.getUid();
     }
 }

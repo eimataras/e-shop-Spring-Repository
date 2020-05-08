@@ -16,7 +16,7 @@ public class FireBaseConfig {
     FirebaseApp createFireBaseApp() throws IOException {
 
         FileInputStream serviceAccount =
-                new FileInputStream("C:\\Users\\Eima\\IdeaProjects\\e-shop-Spring-Repository\\bookshop-86079-firebase-adminsdk-74u5r-134131e90c.json");
+                new FileInputStream("C:/Users/Eima/IdeaProjects/e-shop-Spring-Repository/src/main/resources/bookshop-86079-firebase-adminsdk-74u5r-134131e90c.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))

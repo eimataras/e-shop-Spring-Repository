@@ -37,7 +37,16 @@ public interface UserMapper {
     User findByUsername(String username);
 
 
-    @Insert("INSERT INTO `User` (`name`, `surname`, `username`, `password`) VALUES (#{name}, #{surname}, #{username}, #{password})")
+    @Select("SELECT * FROM `User` WHERE `uid`=#{uid}")
+    @Results({
+            @Result(id = true, property = "user_id", column = "user_id"),
+            @Result(property = "roles", column = "user_id",
+                    many = @Many(select = "lt.eimantas.eshop.mapper.UserRoleMapper.findByUserId"))
+    })
+    User findByUid(String uid);
+
+
+    @Insert("INSERT INTO `User` (`name`, `surname`, `username`, `password`, `uid`) VALUES (#{name}, #{surname}, #{username}, #{password}, #{uid})")
     void add(User user);
 
 
@@ -54,7 +63,7 @@ public interface UserMapper {
     Integer findMaxId();
 
 
-    @Update("UPDATE `User` SET `name`=#{name}, `surname`=#{surname}, `username`=#{username}, `password`=#{password} WHERE `user_id`=#{user_id}")
+    @Update("UPDATE `User` SET `name`=#{name}, `surname`=#{surname}, `username`=#{username}, `password`=#{password}, `uid`=#{uid} WHERE `user_id`=#{user_id}")
     void update(User user);
 
 
