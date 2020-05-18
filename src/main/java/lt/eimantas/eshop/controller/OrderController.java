@@ -19,8 +19,10 @@ public class OrderController {
 
     @Autowired
     OrderMapper orderMapper;
+
     @Autowired
     OrderItemsMapper orderItemsMapper;
+
 
     @GetMapping("/all")
     public List<OrderAndUserAndStatus> getAllOrders() {
@@ -28,27 +30,23 @@ public class OrderController {
     }
 
     @GetMapping("/:id")
-    public @ResponseBody
-    Optional<OrderAndUserAndStatus> getOneOrderById(@RequestParam Integer order_id) {
+    public Optional<OrderAndUserAndStatus> getOneOrderById(@RequestParam Integer order_id) {
         return orderMapper.findById(order_id);
     }
 
     @GetMapping("/:username")
-    public @ResponseBody
-    List<OrderAndUserAndStatusAndItemsAndBook> getFullOrderInfoByUsername(@RequestParam String username) {
+    public List<OrderAndUserAndStatusAndItemsAndBook> getFullOrderInfoByUsername(@RequestParam String username) {
         return orderMapper.findByUsername(username);
     }
 
     @GetMapping("/:max-id")
-    public @ResponseBody
-    Optional<OrderAndUserAndStatus> getOrderByMaxId() {
+    public Optional<OrderAndUserAndStatus> getOrderByMaxId() {
         return orderMapper.findByMaxId();
     }
 
 
     @PostMapping("/add")
-    public @ResponseBody
-    Optional<OrderAndUserAndStatus> addOrder(@RequestBody Order order) {
+    public Optional<OrderAndUserAndStatus> addOrder(@RequestBody Order order) {
 
 //      Patikrinam ar besikreipianciam vartotojui egzistuoja orderis su statusu NEW
         Integer orderAlreadyExistId = orderMapper.findOptionalId(order.getUser_id(), order.getStatus_id());
@@ -62,25 +60,20 @@ public class OrderController {
             OrderItems orderItems = new OrderItems(order.getOrder_id(), order.getBook_id(), 1);
             orderItemsMapper.add(orderItems);
         }
-
         return orderMapper.findByMaxId();
     }
 
     @PutMapping("/edit")
-    public @ResponseBody
-    Optional<OrderAndUserAndStatus> updateOrder(@RequestBody Order order) {
+    public Optional<OrderAndUserAndStatus> updateOrder(@RequestBody Order order) {
         orderMapper.update(order);
         Integer id = order.getOrder_id();
-
         return orderMapper.findById(id);
     }
 
     @DeleteMapping("/delete")
-    public @ResponseBody
-    Optional<OrderAndUserAndStatus> deleteOrder(@RequestParam Integer order_id) {
+    public Optional<OrderAndUserAndStatus> deleteOrder(@RequestParam Integer order_id) {
         Optional<OrderAndUserAndStatus> result = orderMapper.findById(order_id);
         orderMapper.deleteById(order_id);
-
         return result;
     }
 }

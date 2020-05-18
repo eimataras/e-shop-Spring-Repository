@@ -1,7 +1,6 @@
 package lt.eimantas.eshop.controller;
 
 import lt.eimantas.eshop.mapper.UserRoleMapper;
-import lt.eimantas.eshop.model.User;
 import lt.eimantas.eshop.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,26 +23,19 @@ public class UserRoleController {
     }
 
     @GetMapping("/:id")
-    public @ResponseBody
-    Optional<UserRole> getOneUserRoleById(@RequestParam Integer user_role_id) {
-        Optional<UserRole> result = userRoleMapper.findById(user_role_id);
-        return result;
+    public Optional<UserRole> getOneUserRoleById(@RequestParam Integer user_role_id) {
+        return userRoleMapper.findById(user_role_id);
     }
 
     @GetMapping("/max-id")
-    public @ResponseBody Optional <UserRole> getUserRoleByMaxId(){
-        Optional <UserRole> result = userRoleMapper.findByMaxId();
-
-        return result;
+    public Optional<UserRole> getUserRoleByMaxId() {
+        return userRoleMapper.findByMaxId();
     }
 
     @PostMapping("/add")
-    public Optional <UserRole> addUserRole(@RequestBody UserRole userRole) {
+    public Optional<UserRole> addUserRole(@RequestBody UserRole userRole) {
         userRoleMapper.add(userRole);
-
-        Optional <UserRole> result = userRoleMapper.findByMaxId();
-
-        return result;
+        return userRoleMapper.findByMaxId();
     }
 
     @PutMapping("/edit")

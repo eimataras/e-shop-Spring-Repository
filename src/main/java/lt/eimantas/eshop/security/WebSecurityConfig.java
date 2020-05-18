@@ -17,10 +17,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@CrossOrigin(origins = "http://localhost:3000")
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

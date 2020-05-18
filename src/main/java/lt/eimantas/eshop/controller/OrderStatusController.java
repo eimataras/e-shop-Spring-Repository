@@ -22,10 +22,8 @@ public class OrderStatusController {
     }
 
     @GetMapping("/:id")
-    public @ResponseBody
-    Optional<OrderStatus> getOneStatusById(@RequestParam Integer status_id) {
-        Optional<OrderStatus> result = orderStatusMapper.findById(status_id);
-        return result;
+    public Optional<OrderStatus> getOneStatusById(@RequestParam Integer status_id) {
+        return orderStatusMapper.findById(status_id);
     }
 
     @PostMapping("/add")

@@ -31,14 +31,17 @@ public class AuthController {
 
     @RequestMapping(value = "/api/auth", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-
         final String uid = jwtTokenUtil.validateIdTokenAndGetUid(authenticationRequest.getIdToken());
-        final User user = new User(userMapper.findByUid(uid));
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(user.getUsername());
-        final String jwt = jwtTokenUtil.generateToken(userDetails, user);
+        final User user = userMapper.findByUid(uid);
+        if (user != null) {
+            final UserDetails userDetails = userDetailsService
+                    .loadUserByUsername(user.getUsername());
+            final String jwt = jwtTokenUtil.generateToken(userDetails, user);
 
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+            return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        } else {
+            return null;
+        }
 
 
 //  ----------------standard username and password spring boot auth using jwt

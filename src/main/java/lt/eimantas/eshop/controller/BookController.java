@@ -2,9 +2,7 @@ package lt.eimantas.eshop.controller;
 
 import lt.eimantas.eshop.mapper.BookMapper;
 import lt.eimantas.eshop.model.Book;
-import lt.eimantas.eshop.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,19 +23,17 @@ public class BookController {
     }
 
     @GetMapping("/:id")
-    public @ResponseBody
-    Optional<Book> getOneBookById(@RequestParam Integer book_id) {
+    public Optional<Book> getOneBookById(@RequestParam Integer book_id) {
         return bookMapper.findById(book_id);
     }
 
     @GetMapping("/max-id")
-    public @ResponseBody Optional <Book> getBookByMaxId(){
+    public Optional<Book> getBookByMaxId() {
         return bookMapper.findByMaxId();
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/add")
-    public @ResponseBody Optional <Book> addBook(@RequestBody Book book) {
+    public Optional<Book> addBook(@RequestBody Book book) {
         bookMapper.add(book);
         return bookMapper.findByMaxId();
     }
@@ -47,9 +43,8 @@ public class BookController {
         bookMapper.update(book);
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/delete")
-    public @ResponseBody Optional<Book> deleteBook(@RequestParam Integer book_id) {
+    public Optional<Book> deleteBook(@RequestParam Integer book_id) {
         Optional<Book> result = bookMapper.findById(book_id);
         bookMapper.deleteById(book_id);
         return result;

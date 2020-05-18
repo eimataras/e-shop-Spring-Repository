@@ -74,7 +74,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         MyHttpServletResponseWrapper myHttpServletResponseWrapper = new MyHttpServletResponseWrapper(response);
 
         filterChain.doFilter(myHttpServletRequestWrapper, myHttpServletResponseWrapper);
-        myHttpServletResponseWrapper.flushBuffer();
+//        myHttpServletResponseWrapper.flushBuffer();
 
         byte[] copy = myHttpServletResponseWrapper.getCopy();
         Scanner sc = new Scanner(myHttpServletRequestWrapper.getInputStream()).useDelimiter("\\A");

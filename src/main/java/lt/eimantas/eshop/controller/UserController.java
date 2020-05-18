@@ -17,36 +17,37 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
     private UserMapper userMapper;
 
     @Autowired
     private UserRoleMapper userRoleMapper;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
-
-//    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/all")
     public List<User> getAllUsers() {
         return userMapper.findAll();
     }
 
     @GetMapping("/:id")
-    public @ResponseBody Optional <User> getUserById(@RequestParam Integer id) {
+    public Optional<User> getUserById(@RequestParam Integer id) {
         return userMapper.findById(id);
     }
 
     @GetMapping("/max-id")
-    public @ResponseBody Optional <User> getUserByMaxId(){
+    public Optional<User> getUserByMaxId() {
         return userMapper.findByMaxId();
     }
 
     @GetMapping("/username")
-    public @ResponseBody User getUserByUsername(@RequestParam String username) {return userMapper.findByUsername(username);}
+    public User getUserByUsername(@RequestParam String username) {
+        return userMapper.findByUsername(username);
+    }
 
     @PostMapping("/add-client")
-    public @ResponseBody Optional <User> addUserClient(@RequestBody User user) {
+    public Optional<User> addUserClient(@RequestBody User user) {
         User encodedUser = new User(user.getName(), user.getSurname(), user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getUid());
         userMapper.add(encodedUser);
 
@@ -61,10 +62,8 @@ public class UserController {
         return userMapper.findByMaxId();
     }
 
-
-//    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/add-admin")
-    public @ResponseBody Optional <User> addUserAdmin(@RequestBody User user) {
+    public Optional<User> addUserAdmin(@RequestBody User user) {
         User encodedUser = new User(user.getName(), user.getSurname(), user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getUid());
         userMapper.add(encodedUser);
 
@@ -79,7 +78,6 @@ public class UserController {
         return userMapper.findByMaxId();
     }
 
-
     @PutMapping("/edit")
     public void updateUser(@RequestBody User user) {
         userMapper.update(user);
@@ -92,8 +90,8 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public @ResponseBody Optional <User> deleteUser(@RequestParam Integer user_id) {
-        Optional <User> result = userMapper.findById(user_id);
+    public Optional<User> deleteUser(@RequestParam Integer user_id) {
+        Optional<User> result = userMapper.findById(user_id);
         userMapper.deleteById(user_id);
         return result;
     }

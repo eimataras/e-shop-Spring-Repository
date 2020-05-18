@@ -18,6 +18,7 @@ public class OrderItemsController {
 
     @Autowired
     private OrderItemsMapper orderItemsMapper;
+
     @Autowired
     private OrderMapper orderMapper;
 
@@ -28,15 +29,13 @@ public class OrderItemsController {
     }
 
     @GetMapping("/:id")
-    public @ResponseBody
-    Optional<OrderItems> getOneOrderItemById(@RequestParam Integer order_item_id) {
+    public Optional<OrderItems> getOneOrderItemById(@RequestParam Integer order_item_id) {
         return orderItemsMapper.findById(order_item_id);
     }
 
     //suranda visus OrderItems su Book informacija pagal order_id
     @GetMapping("/:orderId")
-    public @ResponseBody
-    List<OrderItemsAndBook> getAllOrderItemsByOrderId(@RequestParam Integer order_id) {
+    public List<OrderItemsAndBook> getAllOrderItemsByOrderId(@RequestParam Integer order_id) {
         return orderItemsMapper.findByOrderId(order_id);
     }
 
@@ -54,7 +53,6 @@ public class OrderItemsController {
             OrderItems orderItem = new OrderItems(order_item_id, orderItems.getOrder_id(), orderItems.getBook_id(), quantity + 1);
             orderItemsMapper.update(orderItem);
         }
-
         return orderMapper.findById(orderItems.getOrder_id());
     }
 
@@ -72,7 +70,6 @@ public class OrderItemsController {
         } else {
             orderItemsMapper.update(orderItems);
         }
-
         return orderMapper.findById(orderItems.getOrder_id());
     }
 
