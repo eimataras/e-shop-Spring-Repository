@@ -1,7 +1,9 @@
 package lt.eimantas.eshop.security;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseToken;
+import lt.eimantas.eshop.reqResLogger.MyHttpServletResponseWrapper;
+import lt.eimantas.eshop.reqResLogger.MyHttpServletRequestWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,19 +18,24 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Scanner;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
+    private static Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
+
     @Autowired
     private MyUserDetailsService myUserDetailsService;
-
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+//-------Tokens' validation job start here
         final String authorizationHeader = request.getHeader("Authorization");
         final String firebaseHeader = request.getHeader("Firebase");
         String username = null;
@@ -55,6 +62,42 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
-        filterChain.doFilter(request, response);
+//-------Tokens' validation job end here
+
+
+//-------REST API request/response logging job start here
+        if (response.getCharacterEncoding() == null) {
+            response.setCharacterEncoding("UTF-8"); // Or whatever default. UTF-8 is good for World Domination.
+        }
+
+        MyHttpServletRequestWrapper myHttpServletRequestWrapper = new MyHttpServletRequestWrapper(request);
+        MyHttpServletResponseWrapper myHttpServletResponseWrapper = new MyHttpServletResponseWrapper(response);
+
+        filterChain.doFilter(myHttpServletRequestWrapper, myHttpServletResponseWrapper);
+        myHttpServletResponseWrapper.flushBuffer();
+
+        byte[] copy = myHttpServletResponseWrapper.getCopy();
+        Scanner sc = new Scanner(myHttpServletRequestWrapper.getInputStream()).useDelimiter("\\A");
+        String result = sc.hasNext() ? sc.next() : "";
+
+        log.info("");
+        log.info("--------Request method: [" + myHttpServletRequestWrapper.getMethod() + "] ------------------------");
+        log.info("URI: [" + myHttpServletRequestWrapper.getRequestURI() + "]");
+        Collection<String> reqHeaderNames = Collections.list(myHttpServletRequestWrapper.getHeaderNames());
+        reqHeaderNames.forEach(name -> {
+            log.info("Request header: [" + name + ": " + myHttpServletRequestWrapper.getHeader(name) + "]");
+        });
+        log.info("Request body: " + result);
+
+        log.info("--------Response status code: [" + myHttpServletResponseWrapper.getStatus() + "] ------------------");
+        Collection<String> resHeaderNames = myHttpServletResponseWrapper.getHeaderNames();
+        if (resHeaderNames != null) {
+            resHeaderNames.forEach(name -> {
+                log.info("Response header: [" + name + ": " + myHttpServletResponseWrapper.getHeader(name) + "]");
+            });
+        }
+        log.info("Response body: " + new String(copy, myHttpServletResponseWrapper.getCharacterEncoding()));
+        log.info("");
+//-------REST API request/response logging job end here
     }
 }
