@@ -1,7 +1,7 @@
 package lt.eimantas.eshop.security;
 
-import lt.eimantas.eshop.reqResLogger.MyHttpServletResponseWrapper;
 import lt.eimantas.eshop.reqResLogger.MyHttpServletRequestWrapper;
+import lt.eimantas.eshop.reqResLogger.MyHttpServletResponseWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +73,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         MyHttpServletRequestWrapper myHttpServletRequestWrapper = new MyHttpServletRequestWrapper(request);
         MyHttpServletResponseWrapper myHttpServletResponseWrapper = new MyHttpServletResponseWrapper(response);
 
-        filterChain.doFilter(myHttpServletRequestWrapper, myHttpServletResponseWrapper);
+        filterChain.doFilter(myHttpServletRequestWrapper, response); //myHttpServletResponseWrapper does the job, but fucks up the response headers logging, that's why it is not included into the filterChain
 //        myHttpServletResponseWrapper.flushBuffer();
 
         byte[] copy = myHttpServletResponseWrapper.getCopy();
@@ -89,11 +89,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         });
         log.info("Request body: " + result);
 
-        log.info("--------Response status code: [" + myHttpServletResponseWrapper.getStatus() + "] ------------------");
-        Collection<String> resHeaderNames = myHttpServletResponseWrapper.getHeaderNames();
+        log.info("--------Response status code: [" + response.getStatus() + "] ------------------");
+        Collection<String> resHeaderNames = response.getHeaderNames();
         if (resHeaderNames != null) {
             resHeaderNames.forEach(name -> {
-                log.info("Response header: [" + name + ": " + myHttpServletResponseWrapper.getHeader(name) + "]");
+                log.info("Response header: [" + name + ": " + response.getHeader(name) + "]");
             });
         }
         log.info("Response body: " + new String(copy, myHttpServletResponseWrapper.getCharacterEncoding()));
