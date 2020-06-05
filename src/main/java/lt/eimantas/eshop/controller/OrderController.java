@@ -30,8 +30,8 @@ public class OrderController {
     }
 
     @GetMapping("/:id")
-    public Optional<OrderAndUserAndStatus> getOneOrderById(@RequestParam Integer order_id) {
-        return orderMapper.findById(order_id);
+    public Optional<OrderAndUserAndStatus> getOneOrderById(@RequestParam Integer orderId) {
+        return orderMapper.findById(orderId);
     }
 
     @GetMapping("/:username")
@@ -49,15 +49,15 @@ public class OrderController {
     public Optional<OrderAndUserAndStatus> addOrder(@RequestBody Order order) {
 
 //      Patikrinam ar besikreipianciam vartotojui egzistuoja orderis su statusu NEW
-        Integer orderAlreadyExistId = orderMapper.findOptionalId(order.getUser_id(), order.getStatus_id());
+        Integer orderAlreadyExistId = orderMapper.findOptionalId(order.getUserId(), order.getStatusId());
         if (orderAlreadyExistId == null) {
 
 //          Jei neegzistuoja, tuomet sukuriam jam nauja orderi su statusu NEW
             orderMapper.add(order);
-            order.setOrder_id(orderMapper.findMaxId());
+            order.setOrderId(orderMapper.findMaxId());
 
 //          Ir automatiskai sukuriam irasa OrderItems lenteleje katik sukurtam naujam orderiui
-            OrderItems orderItems = new OrderItems(order.getOrder_id(), order.getBook_id(), 1);
+            OrderItems orderItems = new OrderItems(order.getOrderId(), order.getBookId(), 1);
             orderItemsMapper.add(orderItems);
         }
         return orderMapper.findByMaxId();
@@ -66,14 +66,14 @@ public class OrderController {
     @PutMapping("/edit")
     public Optional<OrderAndUserAndStatus> updateOrder(@RequestBody Order order) {
         orderMapper.update(order);
-        Integer id = order.getOrder_id();
+        Integer id = order.getOrderId();
         return orderMapper.findById(id);
     }
 
     @DeleteMapping("/delete")
-    public Optional<OrderAndUserAndStatus> deleteOrder(@RequestParam Integer order_id) {
-        Optional<OrderAndUserAndStatus> result = orderMapper.findById(order_id);
-        orderMapper.deleteById(order_id);
+    public Optional<OrderAndUserAndStatus> deleteOrder(@RequestParam Integer orderId) {
+        Optional<OrderAndUserAndStatus> result = orderMapper.findById(orderId);
+        orderMapper.deleteById(orderId);
         return result;
     }
 }

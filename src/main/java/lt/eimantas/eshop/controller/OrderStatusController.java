@@ -22,8 +22,8 @@ public class OrderStatusController {
     }
 
     @GetMapping("/:id")
-    public Optional<OrderStatus> getOneStatusById(@RequestParam Integer status_id) {
-        return orderStatusMapper.findById(status_id);
+    public Optional<OrderStatus> getOneStatusById(@RequestParam Integer statusId) {
+        return orderStatusMapper.findById(statusId);
     }
 
     @PostMapping("/add")
@@ -37,7 +37,7 @@ public class OrderStatusController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteOrderStatus(@RequestParam Integer status_id) {
-        orderStatusMapper.deleteById(status_id);
+    public void deleteOrderStatus(@RequestParam Integer statusId) {
+        orderStatusMapper.deleteById(statusId);
     }
 }

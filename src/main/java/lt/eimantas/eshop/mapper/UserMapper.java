@@ -12,26 +12,26 @@ public interface UserMapper {
 
     @Select("SELECT * FROM `User`")
     @Results({
-            @Result(id = true, property = "user_id", column = "user_id"),
-            @Result(property = "roles", column = "user_id",
+            @Result(id = true, property = "userId", column = "userId"),
+            @Result(property = "roles", column = "userId",
                     many = @Many(select = "lt.eimantas.eshop.mapper.UserRoleMapper.findByUserId"))
     })
     List<User> findAll();
 
 
-    @Select("SELECT * FROM `User` WHERE `user_id`=#{user_id}")
+    @Select("SELECT * FROM `User` WHERE `userId`=#{userId}")
     @Results({
-            @Result(id = true, property = "user_id", column = "user_id"),
-            @Result(property = "roles", column = "user_id",
+            @Result(id = true, property = "userId", column = "userId"),
+            @Result(property = "roles", column = "userId",
                     many = @Many(select = "lt.eimantas.eshop.mapper.UserRoleMapper.findByUserId"))
     })
-    Optional<User> findById(Integer user_id);
+    Optional<User> findById(Integer userId);
 
 
     @Select("SELECT * FROM `User` WHERE `username`=#{username}")
     @Results({
-            @Result(id = true, property = "user_id", column = "user_id"),
-            @Result(property = "roles", column = "user_id",
+            @Result(id = true, property = "userId", column = "userId"),
+            @Result(property = "roles", column = "userId",
                     many = @Many(select = "lt.eimantas.eshop.mapper.UserRoleMapper.findByUserId"))
     })
     User findByUsername(String username);
@@ -39,8 +39,8 @@ public interface UserMapper {
 
     @Select("SELECT * FROM `User` WHERE `uid`=#{uid}")
     @Results({
-            @Result(id = true, property = "user_id", column = "user_id"),
-            @Result(property = "roles", column = "user_id",
+            @Result(id = true, property = "userId", column = "userId"),
+            @Result(property = "roles", column = "userId",
                     many = @Many(select = "lt.eimantas.eshop.mapper.UserRoleMapper.findByUserId"))
     })
     User findByUid(String uid);
@@ -50,20 +50,20 @@ public interface UserMapper {
     void add(User user);
 
 
-    @Select("SELECT * FROM `User` ORDER BY user_id DESC LIMIT 1")
+    @Select("SELECT * FROM `User` ORDER BY userId DESC LIMIT 1")
     @Results({
-            @Result(id = true, property = "user_id", column = "user_id"),
-            @Result(property = "roles", column = "user_id",
+            @Result(id = true, property = "userId", column = "userId"),
+            @Result(property = "roles", column = "userId",
                     many = @Many(select = "lt.eimantas.eshop.mapper.UserRoleMapper.findByUserId"))
     })
     Optional<User> findByMaxId();
 
 
-    @Select("SELECT user_id FROM `User` ORDER BY user_id DESC LIMIT 1")
+    @Select("SELECT userId FROM `User` ORDER BY userId DESC LIMIT 1")
     Integer findMaxId();
 
 
-    @Update("UPDATE `User` SET `name`=#{name}, `surname`=#{surname}, `username`=#{username}, `password`=#{password}, `uid`=#{uid} WHERE `user_id`=#{user_id}")
+    @Update("UPDATE `User` SET `name`=#{name}, `surname`=#{surname}, `username`=#{username}, `password`=#{password}, `uid`=#{uid} WHERE `userId`=#{userId}")
     void update(User user);
 
 
@@ -72,6 +72,6 @@ public interface UserMapper {
     void changePassword(String username, String oldPassword, String newPassword);
 
 
-    @Delete("DELETE FROM `User` WHERE `user_id` = #{user_id}")
-    void deleteById(Integer user_id);
+    @Delete("DELETE FROM `User` WHERE `userId` = #{userId}")
+    void deleteById(Integer userId);
 }

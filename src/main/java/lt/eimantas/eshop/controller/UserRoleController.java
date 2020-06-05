@@ -23,8 +23,8 @@ public class UserRoleController {
     }
 
     @GetMapping("/:id")
-    public Optional<UserRole> getOneUserRoleById(@RequestParam Integer user_role_id) {
-        return userRoleMapper.findById(user_role_id);
+    public Optional<UserRole> getOneUserRoleById(@RequestParam Integer userRoleId) {
+        return userRoleMapper.findById(userRoleId);
     }
 
     @GetMapping("/max-id")
@@ -44,7 +44,7 @@ public class UserRoleController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteUserRole(@RequestParam Integer user_role_id) {
-        userRoleMapper.deleteById(user_role_id);
+    public void deleteUserRole(@RequestParam Integer userRoleId) {
+        userRoleMapper.deleteById(userRoleId);
     }
 }

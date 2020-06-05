@@ -52,10 +52,10 @@ public class UserController {
         userMapper.add(encodedUser);
 
         //---------SUKURIA IRASA (NEW CLIENT) UserRole LENTELEJE-------------
-        Integer user_id = userMapper.findMaxId();
-        Integer role_id = 2;  // CLIENT
-        String role_name = "CLIENT - autoMagic";
-        UserRole userRole = new UserRole(user_id, role_id, role_name);
+        Integer userId = userMapper.findMaxId();
+        Integer roleId = 2;  // CLIENT
+        String roleName = "CLIENT - autoMagic";
+        UserRole userRole = new UserRole(userId, roleId, roleName);
         userRoleMapper.add(userRole);
         //---------SUKURIA IRASA (NEW CLIENT) UserRole LENTELEJE-------------
 
@@ -68,10 +68,10 @@ public class UserController {
         userMapper.add(encodedUser);
 
         //---------SUKURIA IRASA (NEW ADMIN) UserRole LENTELEJE-------------
-        Integer user_id = userMapper.findMaxId();
-        Integer role_id = 1;  // ADMIN
-        String role_name = "ADMIN - autoMagic";
-        UserRole userRole = new UserRole(user_id, role_id, role_name);
+        Integer userId = userMapper.findMaxId();
+        Integer roleId = 1;  // ADMIN
+        String roleName = "ADMIN - autoMagic";
+        UserRole userRole = new UserRole(userId, roleId, roleName);
         userRoleMapper.add(userRole);
         //---------SUKURIA IRASA (NEW ADMIN) UserRole LENTELEJE-------------
 
@@ -90,9 +90,9 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public Optional<User> deleteUser(@RequestParam Integer user_id) {
-        Optional<User> result = userMapper.findById(user_id);
-        userMapper.deleteById(user_id);
+    public Optional<User> deleteUser(@RequestParam Integer userId) {
+        Optional<User> result = userMapper.findById(userId);
+        userMapper.deleteById(userId);
         return result;
     }
 }

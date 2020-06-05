@@ -4,20 +4,20 @@ import lombok.Data;
 
 @Data
 public class OrderAndUserAndStatusAndItemsAndBook {
-    private Integer order_id;
-//    private Integer user_id;
+    private Integer orderId;
+//    private Integer userId;
     private String name;
     private String surname;
     private String username;
 //    private String password;
 //    private String role;
-//    private Integer status_id;
+//    private Integer statusId;
     private String type;
-//    private Integer order_item_id;
-//    private Integer book_id;
+//    private Integer orderItemId;
+//    private Integer bookId;
     private String title;
     private String author;
-    private String published_date;
-    private String book_cover;
+    private String publishedDate;
+    private String bookCover;
     private Integer quantity;
 }

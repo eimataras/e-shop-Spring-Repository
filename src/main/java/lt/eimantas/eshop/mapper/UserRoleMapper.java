@@ -9,26 +9,26 @@ import java.util.Optional;
 @Mapper
 public interface UserRoleMapper {
 
-    @Select("SELECT * FROM `UserRole` LEFT JOIN `Role` ON `UserRole`.`role_id` = `Role`.`role_id`")
+    @Select("SELECT * FROM `UserRole` LEFT JOIN `Role` ON `UserRole`.`roleId` = `Role`.`roleId`")
     List<UserRole> findAll();
 
-    @Select("SELECT * FROM `UserRole` LEFT JOIN `Role` ON `UserRole`.`role_id` = `Role`.`role_id` WHERE `user_role_id`=#{user_role_id}")
-    Optional<UserRole> findById(Integer user_role_id);
+    @Select("SELECT * FROM `UserRole` LEFT JOIN `Role` ON `UserRole`.`roleId` = `Role`.`roleId` WHERE `userRoleId`=#{userRoleId}")
+    Optional<UserRole> findById(Integer userRoleId);
 
-//    ---------------Used in UserMapper----------------------------------------
-    @Select("SELECT * FROM `UserRole` LEFT JOIN `Role` ON `UserRole`.`role_id` = `Role`.`role_id` WHERE `user_id`=#{user_id}")
-    List<UserRole> findByUserId(Integer user_id);
+    //    ---------------Used in UserMapper----------------------------------------
+    @Select("SELECT * FROM `UserRole` LEFT JOIN `Role` ON `UserRole`.`roleId` = `Role`.`roleId` WHERE `userId`=#{userId}")
+    List<UserRole> findByUserId(Integer userId);
 //    -------------------------------------------------------------------------
 
-    @Select("SELECT * FROM `UserRole` LEFT JOIN `Role` ON `UserRole`.`role_id` = `Role`.`role_id` ORDER BY user_role_id DESC LIMIT 1")
+    @Select("SELECT * FROM `UserRole` LEFT JOIN `Role` ON `UserRole`.`roleId` = `Role`.`roleId` ORDER BY userRoleId DESC LIMIT 1")
     Optional<UserRole> findByMaxId();
 
-    @Insert("INSERT INTO `UserRole` (`user_id`, `role_id`) VALUES (#{user_id}, #{role_id})")
+    @Insert("INSERT INTO `UserRole` (`userId`, `roleId`) VALUES (#{userId}, #{roleId})")
     void add(UserRole userRole);
 
-    @Update("UPDATE `UserRole` SET `user_id`=#{user_id}, `role_id`=#{role_id} WHERE `user_role_id`=#{user_role_id}")
+    @Update("UPDATE `UserRole` SET `userId`=#{userId}, `roleId`=#{roleId} WHERE `userRoleId`=#{userRoleId}")
     void update(UserRole userRole);
 
-    @Delete("DELETE FROM `UserRole` WHERE `user_role_id` = #{user_role_id}")
-    void deleteById(Integer user_role_id);
+    @Delete("DELETE FROM `UserRole` WHERE `userRoleId` = #{userRoleId}")
+    void deleteById(Integer userRoleId);
 }

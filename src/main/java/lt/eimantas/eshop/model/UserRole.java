@@ -5,15 +5,15 @@ import lombok.Data;
 @Data
 public class UserRole {
 
-    private Integer user_role_id;
-    private Integer user_id;
-    private Integer role_id;
-    private String role_name; //Recently added
+    private Integer userRoleId;
+    private Integer userId;
+    private Integer roleId;
+    private String roleName; //Recently added
 
 
-    public UserRole(Integer user_id, Integer role_id, String role_name) {
-        this.user_id = user_id;
-        this.role_id = role_id;
-        this.role_name = role_name;
+    public UserRole(Integer userId, Integer roleId, String roleName) {
+        this.userId = userId;
+        this.roleId = roleId;
+        this.roleName = roleName;
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 @Data   //Creates getters and setter when compiling
 public class User {
 
-    private Integer user_id;
+    private Integer userId;
     private String name;
     private String surname;
     private String username;   //(UK)
@@ -31,7 +31,7 @@ public class User {
         this.username = user.getUsername();
         this.surname = user.getSurname();
         this.name = user.getName();
-        this.user_id = user.getUser_id();
+        this.userId = user.getUserId();
         this.uid = user.getUid();
     }
 }

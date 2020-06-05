@@ -23,8 +23,8 @@ public class BookController {
     }
 
     @GetMapping("/:id")
-    public Optional<Book> getOneBookById(@RequestParam Integer book_id) {
-        return bookMapper.findById(book_id);
+    public Optional<Book> getOneBookById(@RequestParam Integer bookId) {
+        return bookMapper.findById(bookId);
     }
 
     @GetMapping("/max-id")
@@ -44,9 +44,9 @@ public class BookController {
     }
 
     @DeleteMapping("/delete")
-    public Optional<Book> deleteBook(@RequestParam Integer book_id) {
-        Optional<Book> result = bookMapper.findById(book_id);
-        bookMapper.deleteById(book_id);
+    public Optional<Book> deleteBook(@RequestParam Integer bookId) {
+        Optional<Book> result = bookMapper.findById(bookId);
+        bookMapper.deleteById(bookId);
         return result;
     }
 }

@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data  //Creates constructor, getters and setter when compiling
 public class Book {
-    private Integer book_id;   //(PK)
+    private Integer bookId;   //(PK)
     private String title;
     private String author;
-    private String published_date;
-    private String book_cover; //image
+    private String publishedDate;
+    private String bookCover; //image
     private Integer quantity;
 }

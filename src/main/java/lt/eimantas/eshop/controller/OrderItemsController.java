@@ -29,31 +29,31 @@ public class OrderItemsController {
     }
 
     @GetMapping("/:id")
-    public Optional<OrderItems> getOneOrderItemById(@RequestParam Integer order_item_id) {
-        return orderItemsMapper.findById(order_item_id);
+    public Optional<OrderItems> getOneOrderItemById(@RequestParam Integer orderItemId) {
+        return orderItemsMapper.findById(orderItemId);
     }
 
     //suranda visus OrderItems su Book informacija pagal order_id
     @GetMapping("/:orderId")
-    public List<OrderItemsAndBook> getAllOrderItemsByOrderId(@RequestParam Integer order_id) {
-        return orderItemsMapper.findByOrderId(order_id);
+    public List<OrderItemsAndBook> getAllOrderItemsByOrderId(@RequestParam Integer orderId) {
+        return orderItemsMapper.findByOrderId(orderId);
     }
 
     @PostMapping("/add")
     public Optional<OrderAndUserAndStatus> addOrderItem(@RequestBody OrderItems orderItems) {
 
 //      Jei si knyga dar nera itraukta i orderi, sukuriam nauja OrderItems irasa siam orderiui
-        Integer order_item_id = orderItemsMapper.findOptionalId(orderItems.getOrder_id(), orderItems.getBook_id());
-        if (order_item_id == null) {
+        Integer orderItemId = orderItemsMapper.findOptionalId(orderItems.getOrderId(), orderItems.getBookId());
+        if (orderItemId == null) {
             orderItemsMapper.add(orderItems);
 
 //      Jei knyga jau itraukta i orderi, editinam OrderItems irasa pakeisdami tik quantity
         } else {
-            Integer quantity = orderItemsMapper.findOptionalQuantity(order_item_id);
-            OrderItems orderItem = new OrderItems(order_item_id, orderItems.getOrder_id(), orderItems.getBook_id(), quantity + 1);
+            Integer quantity = orderItemsMapper.findOptionalQuantity(orderItemId);
+            OrderItems orderItem = new OrderItems(orderItemId, orderItems.getOrderId(), orderItems.getBookId(), quantity + 1);
             orderItemsMapper.update(orderItem);
         }
-        return orderMapper.findById(orderItems.getOrder_id());
+        return orderMapper.findById(orderItems.getOrderId());
     }
 
     @PutMapping("/edit")
@@ -61,20 +61,20 @@ public class OrderItemsController {
 
 //      Jei is fronto ateina quantity = 0, tuomet istrinam OrderItems irasa
         if (orderItems.getQuantity() == 0) {
-            orderItemsMapper.deleteById(orderItems.getOrder_item_id());
+            orderItemsMapper.deleteById(orderItems.getOrderItemId());
 
 //          Jei siam orderiui tai buvo paskutinis OrderItems irasas, tuomet istrinam ir pati orderi
-//            if (orderItemsMapper.findSingleIdByOrderId(orderItems.getOrder_id()) == null) {
-//                orderMapper.deleteById(orderItems.getOrder_id());
+//            if (orderItemsMapper.findSingleIdByOrderId(orderItems.getOrderId()) == null) {
+//                orderMapper.deleteById(orderItems.getOrderId());
 //            }
         } else {
             orderItemsMapper.update(orderItems);
         }
-        return orderMapper.findById(orderItems.getOrder_id());
+        return orderMapper.findById(orderItems.getOrderId());
     }
 
     @DeleteMapping("/delete")
-    public void deleteBook(@RequestParam Integer order_item_id) {
-        orderItemsMapper.deleteById(order_item_id);
+    public void deleteBook(@RequestParam Integer orderItemId) {
+        orderItemsMapper.deleteById(orderItemId);
     }
 }

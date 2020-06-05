@@ -13,28 +13,28 @@ public interface OrderItemsMapper {
     @Select("SELECT * FROM `OrderItems`")
     List<OrderItems> findAll();
 
-    @Select("SELECT * FROM `OrderItems` WHERE `order_item_id`=#{order_item_id}")
-    Optional<OrderItems> findById(Integer order_item_id);
+    @Select("SELECT * FROM `OrderItems` WHERE `orderItemId`=#{orderItemId}")
+    Optional<OrderItems> findById(Integer orderItemId);
 
     //---------used in Order Mapper-----------------------------------------------------------------------------------
-    @Select("SELECT * FROM `OrderItems` LEFT JOIN `Book` ON `OrderItems`.`book_id` = `Book`.`book_id` WHERE `order_id`=#{order_id}")
-    List<OrderItemsAndBook> findByOrderId(Integer order_id);
+    @Select("SELECT * FROM `OrderItems` LEFT JOIN `Book` ON `OrderItems`.`bookId` = `Book`.`bookId` WHERE `orderId`=#{orderId}")
+    List<OrderItemsAndBook> findByOrderId(Integer orderId);
 
-    @Select("SELECT order_item_id FROM `OrderItems` WHERE `order_id`=#{order_id} LIMIT 1")
-    Integer findSingleIdByOrderId(Integer order_id);
+    @Select("SELECT orderItemId FROM `OrderItems` WHERE `orderId`=#{orderId} LIMIT 1")
+    Integer findSingleIdByOrderId(Integer orderId);
 
-    @Select("SELECT order_item_id FROM `OrderItems` WHERE `order_id`=#{order_id} AND `book_id`=#{book_id}")
-    Integer findOptionalId(Integer order_id, Integer book_id);
+    @Select("SELECT orderItemId FROM `OrderItems` WHERE `orderId`=#{orderId} AND `bookId`=#{bookId}")
+    Integer findOptionalId(Integer orderId, Integer bookId);
 
-    @Select("SELECT quantity FROM `OrderItems` WHERE `order_item_id`=#{order_item_id}")
-    Integer findOptionalQuantity (Integer order_item_id);
+    @Select("SELECT quantity FROM `OrderItems` WHERE `orderItemId`=#{orderItemId}")
+    Integer findOptionalQuantity (Integer orderItemId);
 
-    @Insert("INSERT INTO `OrderItems` (`order_id`, `book_id`, `quantity`) VALUES (#{order_id}, #{book_id}, #{quantity})")
+    @Insert("INSERT INTO `OrderItems` (`orderId`, `bookId`, `quantity`) VALUES (#{orderId}, #{bookId}, #{quantity})")
     void add(OrderItems orderItems);
 
-    @Update("UPDATE `OrderItems` SET `order_id`=#{order_id}, `book_id`=#{book_id}, `quantity`=#{quantity} WHERE `order_item_id`=#{order_item_id}")
+    @Update("UPDATE `OrderItems` SET `orderId`=#{orderId}, `bookId`=#{bookId}, `quantity`=#{quantity} WHERE `orderItemId`=#{orderItemId}")
     void update(OrderItems orderItems);
 
-    @Delete("DELETE FROM `OrderItems` WHERE `order_item_id` = #{order_item_id}")
-    void deleteById(Integer order_item_id);
+    @Delete("DELETE FROM `OrderItems` WHERE `orderItemId` = #{orderItemId}")
+    void deleteById(Integer orderItemId);
 }
