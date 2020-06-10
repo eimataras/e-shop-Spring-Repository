@@ -31,6 +31,23 @@ services:
       MYSQL_ROOT_PASSWORD: root
     networks:
       - todo-spring
+  # e-shop
+  e-shop:
+    container_name: eshop
+    depends_on:
+      - db
+    image: eimataras/e-shop
+    restart: always
+    environment:
+      SERVER_PORT: 8080
+      SPRING_DATASOURCE_URL: jdbc:mysql://app-db:3306/e-shop
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_VALIDATIONQUERY: SELECT 1
+    ports:
+      - '8080:8080'
+    networks:
+      - todo-spring
 networks:
   todo-spring:
 volumes:
