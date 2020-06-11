@@ -36,7 +36,7 @@ dependencies {
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
     implementation 'com.google.firebase:firebase-admin:6.12.2'   //firebase auth support
 
-    // implementation 'org.liquibase:liquibase-core'
+    implementation 'org.liquibase:liquibase-core'
 
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'   //MyBatis
 
