@@ -1,0 +1,69 @@
+databaseChangeLog:
+  - changeSet:
+      id: createDbSchema
+      author: Eimantas
+      changes:
+        - sqlFile:
+            dbms: mysql
+            encoding: utf8
+            endDelimiter: \n/\s*\n|\n/\s*$
+            path: changelog/scripts/01-create-e_shop_db-schema.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: insertDataBook
+      author: Eimantas
+      changes:
+        - sqlFile:
+            dbms: mysql
+            encoding: utf8
+            path: changelog/scripts/02-insert-data-book.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: insertDataRole
+      author: Eimantas
+      changes:
+        - sqlFile:
+            dbms: mysql
+            encoding: utf8
+            path: changelog/scripts/03-insert-data-role.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: insertDataOrderStatus
+      author: Eimantas
+      changes:
+        - sqlFile:
+            dbms: mysql
+            encoding: utf8
+            path: changelog/scripts/04-insert-data-orderStatus.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+#  - changeSet:
+#      id: insertDataUser
+#      author: Eimantas
+#      changes:
+#        - sqlFile:
+#            dbms: mysql
+#            encoding: utf8
+#            path: changelog/scripts/05-insert-data-user.sql
+#            relativeToChangelogFile: true
+#            splitStatements: true
+#            stripComments: true
+#        - changeSet:
+#            id: dropTables
+#            author: Eimantas
+#            changes:
+#              - sqlFile:
+#                  dbms: mysql
+#                  encoding: utf8
+#                  endDelimiter: \n/\s*\n|\n/\s*$
+#                  path: changelog/scripts/09-drop-users-and-addresses-tables.sql
+#                  relativeToChangelogFile: true
+#                  splitStatements: true
+#                  stripComments: true

@@ -6,10 +6,10 @@ services:
     container_name: e-shop-db
     image: mysql:5.7
     volumes:
-      - db_data:/var/lib/mysql
+      - data:/var/lib/mysql
     restart: always
     ports:
-      - '127.0.0.1:3308:3306'
+      - '127.0.0.1:3306:3306'
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: e-shop
@@ -32,23 +32,21 @@ services:
     networks:
      - e-shop-network
   # e-shop
-  e-shop-server:
-    container_name: eshop
-    depends_on:
-      - mydb
-    image: eimataras/e-shop
-    restart: always
-    environment:
-      SERVER_PORT: 8081
-      SPRING_DATASOURCE_URL: jdbc:mysql://e-shop-db:3308/e-shop
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_DATASOURCE_VALIDATIONQUERY: SELECT 1
-    ports:
-      - '8081:8081'
-    networks:
-      - e-shop-network
+#  e-shop-server:
+#    container_name: eshop
+#    depends_on:
+#      - mydb
+#    image: eimataras/e-shop
+#    restart: always
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://mydb/e-shop?useSSL=false&allowPublicKeyRetrieval=true
+#        - SPRING_DATASOURCE_USERNAME=root
+#        - SPRING_DATASOURCE_PASSWORD=root
+#    ports:
+#      - '8081:8080'
+#    networks:
+#      - e-shop-network
 networks:
   e-shop-network:
 volumes:
-  db_data: 
+  data:
