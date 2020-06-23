@@ -44,17 +44,17 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
-#  - changeSet:
-#      id: insertDataUser
-#      author: Eimantas
-#      changes:
-#        - sqlFile:
-#            dbms: mysql
-#            encoding: utf8
-#            path: changelog/scripts/05-insert-data-user.sql
-#            relativeToChangelogFile: true
-#            splitStatements: true
-#            stripComments: true
+  - changeSet:
+      id: insertDataUser
+      author: Eimantas
+      changes:
+        - sqlFile:
+            dbms: mysql
+            encoding: utf8
+            path: changelog/scripts/05-insert-data-user-userRole.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
 #        - changeSet:
 #            id: dropTables
 #            author: Eimantas

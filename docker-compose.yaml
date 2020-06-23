@@ -6,7 +6,7 @@ services:
     container_name: e-shop-db
     image: mysql:5.7
     volumes:
-      - data:/var/lib/mysql
+      - e_shop_data:/var/lib/mysql
     restart: always
     ports:
       - '127.0.0.1:3306:3306'
@@ -49,4 +49,4 @@ services:
 networks:
   e-shop-network:
 volumes:
-  data:
+  e_shop_data:
